@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:bet_hedge/home.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +19,44 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.from(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
       ),
-      home: Home(),
+      home: SplashScr(),
+    );
+  }
+}
+
+class SplashScr extends StatefulWidget {
+  const SplashScr({super.key});
+
+  @override
+  State<SplashScr> createState() => SplashScrState();
+}
+
+class SplashScrState extends State<SplashScr> {
+  @override
+  void initState() {
+    super.initState();
+    toHome();
+  }
+
+  Future<void> toHome() async {
+    await Future.delayed(
+      const Duration(seconds: 2),
+      () => {
+        Navigator.pushReplacement(
+          // ignore: use_build_context_synchronously
+          context,
+          MaterialPageRoute(builder: (context) => Home()),
+        ),
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Image.asset("assets/app_icon.png", height: 60, width: 60),
+      ),
     );
   }
 }
