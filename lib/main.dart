@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bet_hedge/home.dart';
+import 'package:bet_hedge/home/home_ui.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.from(
@@ -45,7 +44,7 @@ class SplashScrState extends State<SplashScr> {
         Navigator.pushReplacement(
           // ignore: use_build_context_synchronously
           context,
-          MaterialPageRoute(builder: (context) => Home()),
+          MaterialPageRoute(builder: (context) => HomeUi()),
         ),
       },
     );
