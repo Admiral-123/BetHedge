@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bet_hedge/home/home_ui.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 void main() {
