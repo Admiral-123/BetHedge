@@ -1,5 +1,6 @@
 import 'package:bet_hedge/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeUi extends StatefulWidget {
@@ -11,7 +12,7 @@ class HomeUi extends StatefulWidget {
 
 class HomeUiState extends State<HomeUi> {
   HomeBloc homeBloc = HomeBloc();
-  var result = "nothing";
+  var result = "-";
 
   @override
   void initState() {
@@ -35,7 +36,9 @@ class HomeUiState extends State<HomeUi> {
         }
       },
       builder: (context, state) {
-        result = "nothing";
+        TextEditingController teamA = TextEditingController();
+        TextEditingController teamB = TextEditingController();
+
         return Scaffold(
           appBar: AppBar(
             title: Text("BetHedge"),
@@ -44,14 +47,60 @@ class HomeUiState extends State<HomeUi> {
           body: Center(
             child: Column(
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    homeBloc.add(CalculateHedgeEvent());
-                  },
-                  child: Text("data"),
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: TextField(
+                    controller: teamA,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[^,\-\s]+')),
+                    ],
+                    keyboardType: TextInputType.numberWithOptions(),
+                    decoration: InputDecoration(
+                      labelText: "Team A Odds",
+
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: TextField(
+                    controller: teamB,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[^,\-\s]+')),
+                    ],
+                    keyboardType: TextInputType.numberWithOptions(),
+
+                    decoration: InputDecoration(
+                      labelText: "Team B Odds",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
                 ),
 
-                Text(result),
+                // initial bet
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      homeBloc.add(
+                        CalculateHedgeEvent(
+                          teamA: teamA.text,
+                          teamB: teamB.text,
+                        ),
+                      );
+                    });
+                  },
+                  child: Text("calculate"),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Text(result, style: TextStyle(fontSize: 20)),
+                ),
               ],
             ),
           ),

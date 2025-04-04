@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:bloc/bloc.dart';
 // ignore: depend_on_referenced_packages
@@ -24,6 +25,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     CalculateHedgeEvent event,
     Emitter<HomeState> emit,
   ) {
-    emit(HedgeOutputState(result: "Hedging complete"));
+    int a = int.parse(event.teamA);
+    int b = int.parse(event.teamB);
+
+    int r = a * b;
+
+    emit(HedgeOutputState(result: r.toString()));
   }
 }
