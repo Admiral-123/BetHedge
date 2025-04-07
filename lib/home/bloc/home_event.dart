@@ -8,6 +8,10 @@ class HomeInitialEvent extends HomeEvent {}
 class CalculateHedgeEvent extends HomeEvent {
   final String teamA;
   final String teamB;
-
-  CalculateHedgeEvent({required this.teamA, required this.teamB});
+  final String money;
+  CalculateHedgeEvent({
+    required this.money,
+    required this.teamA,
+    required this.teamB,
+  });
 }

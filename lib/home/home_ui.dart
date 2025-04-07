@@ -12,7 +12,11 @@ class HomeUi extends StatefulWidget {
 
 class HomeUiState extends State<HomeUi> {
   HomeBloc homeBloc = HomeBloc();
-  var result = "-";
+  var result = "";
+  var bWin = "";
+  var aWin = "";
+  var aWinColor;
+  var bWinColor;
 
   @override
   void initState() {
@@ -30,12 +34,17 @@ class HomeUiState extends State<HomeUi> {
         if (state is HedgeOutputState) {
           setState(() {
             final succesState = state;
-            print("State updated with result: ${state.result}");
-            result = succesState.result;
+            // print("State updated with result: ${state.hedge}");
+            result = succesState.hedge;
+            aWin = succesState.awin;
+            bWin = succesState.bwin;
+            aWinColor = succesState.awinColor;
+            bWinColor = succesState.bwinColor;
           });
         }
       },
       builder: (context, state) {
+        TextEditingController money = TextEditingController();
         TextEditingController teamA = TextEditingController();
         TextEditingController teamB = TextEditingController();
 
@@ -47,6 +56,22 @@ class HomeUiState extends State<HomeUi> {
           body: Center(
             child: Column(
               children: [
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: TextField(
+                    controller: money,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[^,\-\s]+')),
+                    ],
+                    keyboardType: TextInputType.numberWithOptions(),
+                    decoration: InputDecoration(
+                      labelText: "money on team A",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.all(20.0),
                   child: TextField(
@@ -90,6 +115,7 @@ class HomeUiState extends State<HomeUi> {
                         CalculateHedgeEvent(
                           teamA: teamA.text,
                           teamB: teamB.text,
+                          money: money.text,
                         ),
                       );
                     });
@@ -98,8 +124,25 @@ class HomeUiState extends State<HomeUi> {
                 ),
 
                 Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text(result, style: TextStyle(fontSize: 20)),
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    "hedging amount on B:   $result",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    "profit if team A wins:   $aWin",
+                    style: TextStyle(fontSize: 20, color: aWinColor),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    "profit if team B wins:   $bWin",
+                    style: TextStyle(fontSize: 20, color: bWinColor),
+                  ),
                 ),
               ],
             ),

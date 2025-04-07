@@ -10,7 +10,16 @@ class HomeInitial extends HomeState {}
 // final class HomeLoadedState extends HomeState {}
 
 class HedgeOutputState extends HomeActionState {
-  final String result;
-
-  HedgeOutputState({required this.result});
+  final String hedge;
+  final String awin;
+  final String bwin;
+  final Color awinColor;
+  final Color bwinColor;
+  HedgeOutputState({
+    required this.hedge,
+    required this.awin,
+    required this.bwin,
+    required this.awinColor,
+    required this.bwinColor,
+  });
 }
